@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
     
-  http: ^0.12.2
+  http: ^0.13.0-nullsafety.0
   intl: ^0.17.0
   tus_client: ^0.1.1
   tus_client_file_store: ^0.0.3
