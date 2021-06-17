@@ -1,14 +1,24 @@
 part of transloadit;
 
+/// This class serves as a client interface to the Transloadit API.
 class TransloaditClient {
-  late String service = "https://api2.transloadit.com";
+  /// URL of the Transloadit API.
+  late String service = "api2.transloadit.com";
+
+  /// Transloadit auth key.
   late String authKey;
+
+  /// Transloadit auth secret.
   late String authSecret;
+
+  /// How long in seconds for which a Transloadit request should be valid.
   late int duration;
+
+  /// An instance of the Transloadit HTTP Request object.
   late TransloaditRequest request;
 
   TransloaditClient(
-      {String service = "https://api2.transloadit.com",
+      {String service = "api2.transloadit.com",
       required String authKey,
       required String authSecret,
       int duration = 300,
@@ -23,10 +33,14 @@ class TransloaditClient {
     this.request = TransloaditRequest(this);
   }
 
+  /// Gets a Transloadit assembly from an ID
   Future<int> getAssembly(
       {required String assemblyID,
-      String service = '',
+      String serviceURL = '',
       String assemblyPath = '/assemblies/'}) async {
+    if (service.isEmpty) {
+      serviceURL = service;
+    }
     final response =
         await request.httpGet(service, assemblyPath + assemblyID, {});
     return response.statusCode;
