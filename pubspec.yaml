@@ -1,15 +1,19 @@
 name: transloadit
 description: Flutter integration with Transloadit.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Missing-Tech/transloadit-flutter-sdk
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
 
 dependencies:
+  crypto: ^3.0.1
   flutter:
     sdk: flutter
+
+  http: ^0.13.0-nullsafety.0
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -20,6 +24,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+
+  assets:
+  - lib/auth/secrets.json
+  - lib/auth/test.json
 
   # To add assets to your package, add an assets section, like this:
   # assets:

@@ -1,7 +1,11 @@
 library transloadit;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+import 'package:http/http.dart';
+import 'package:intl/intl.dart';
+
+part 'client.dart';
+part 'request.dart';
+part 'response.dart';

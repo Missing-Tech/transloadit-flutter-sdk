@@ -1,12 +1,24 @@
 import 'package:flutter_test/flutter_test.dart';
-
+import 'package:transloadit/auth/keys.dart';
 import 'package:transloadit/transloadit.dart';
 
 void main() {
-  test('adds one to input values', () {
-    final calculator = Calculator();
-    expect(calculator.addOne(2), 3);
-    expect(calculator.addOne(-7), -6);
-    expect(calculator.addOne(0), 1);
+  test('loading secrets', () async {
+    //TODO
+    Future<Secret> futureSecret =
+        SecretLoader(secretPath: "./lib/auth/test.json").load();
+    Secret secret = await futureSecret;
+    futureSecret.then((value) => expect(value.apikey, 'test'));
+  });
+
+  group('client tests', () {
+    TransloaditClient client = TransloaditClient(
+        authKey: '72a70fba93ce41cba617cfd7c2a44b1a',
+        authSecret: '3b2845e9330051ed3adc06b4217c42e4f504f8f3');
+    test('get assembly id', () async {
+      TransloaditResponse response = await client.getAssembly(
+          assemblyID: '0fcea03d1cc14b8abfea28db5e377428');
+      expect(response.statusCode, 200);
+    });
   });
 }
