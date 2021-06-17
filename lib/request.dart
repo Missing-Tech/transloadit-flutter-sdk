@@ -8,15 +8,17 @@ class TransloaditRequest {
     this.transloadit = transloadit;
   }
 
-  Future<Response> httpGet(
-      String service, String assemblyPath, Map<String, dynamic> params) {
+  Future<TransloaditResponse> httpGet(
+      String service, String assemblyPath, Map<String, dynamic> params) async {
     final Uri uri;
     if (params.isEmpty)
       uri = Uri.https(service, assemblyPath);
     else
       uri = Uri.https(service, assemblyPath, toPayload(params));
 
-    return get(uri, headers: headers);
+    Response response = await get(uri, headers: headers);
+
+    return TransloaditResponse(response);
   }
 
   Map<String, dynamic>? toPayload(Map<String, dynamic> data) {

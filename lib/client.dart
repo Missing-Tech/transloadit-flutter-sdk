@@ -17,6 +17,7 @@ class TransloaditClient {
   /// An instance of the Transloadit HTTP Request object.
   late TransloaditRequest request;
 
+  /// Client constructor
   TransloaditClient(
       {String service = "api2.transloadit.com",
       required String authKey,
@@ -34,7 +35,7 @@ class TransloaditClient {
   }
 
   /// Gets a Transloadit assembly from an ID
-  Future<int> getAssembly(
+  Future<TransloaditResponse> getAssembly(
       {required String assemblyID,
       String serviceURL = '',
       String assemblyPath = '/assemblies/'}) async {
@@ -43,6 +44,6 @@ class TransloaditClient {
     }
     final response =
         await request.httpGet(service, assemblyPath + assemblyID, {});
-    return response.statusCode;
+    return response;
   }
 }
