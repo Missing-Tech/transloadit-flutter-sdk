@@ -8,7 +8,4 @@ import 'package:intl/intl.dart';
 
 part 'client.dart';
 part 'request.dart';
-
-int calculate(int one, int two) {
-  return one + two;
-}
+part 'response.dart';
