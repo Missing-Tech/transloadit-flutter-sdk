@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transloadit/auth/keys.dart';
 import 'package:transloadit/transloadit.dart';
@@ -19,6 +20,16 @@ void main() {
       TransloaditResponse response = await client.getAssembly(
           assemblyID: '0fcea03d1cc14b8abfea28db5e377428');
       expect(response.statusCode, 200);
+    });
+
+    test('create assembly', () async {
+      TransloaditAssembly assembly = client.createAssembly(params: {});
+      final imagePath = 'test/assets/cat.jpg';
+      assembly.addFile(file: File(imagePath));
+      assembly.addStep("resize", "/image/resize", {"height": 400});
+      TransloaditResponse response = await assembly.createAssembly();
+
+      expect(response.data["http_code"], 200);
     });
   });
 }
