@@ -51,9 +51,10 @@ class TransloaditRequest {
     }
     DateTime expiry =
         DateTime.now().add(Duration(seconds: transloadit.duration));
+
     data["auth"] = {
       "key": transloadit.authKey,
-      "expires": DateFormat('yyyy/MM/dd H:m:s+00:00').format(expiry)
+      "expires": DateFormat('yyyy/MM/dd HH:mm:ss+00:00').format(expiry)
     };
     String jsonData = json.encode(data);
     return {"params": jsonData, "signature": signData(jsonData)};

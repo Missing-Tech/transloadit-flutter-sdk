@@ -38,18 +38,20 @@ class TransloaditAssembly extends Options {
         final metadata = {
           "assembly_url": assemblyURL,
           "fieldname": key,
-          "filename": files[key]!.name
+          "filename": basename(files[key]!.name)
         };
         final client = TusClient(Uri.parse(tusURL), files[key]!,
             metadata: metadata, maxChunkSize: 5 * 1024 * 1024);
 
-        await client.upload();
+        await client.upload(onProgress: (progress) {
+          print(progress);
+        });
       }
     }
   }
 
-  //TODO: make resumable
-  Future<TransloaditResponse> createAssembly({bool wait = false}) async {
+  //TODO: fix TUS upload
+  Future<TransloaditResponse> createAssembly() async {
     final data = super.options;
     final extraData = {"tus_num_expected_upload_files": files.length};
     TransloaditResponse response = await client.request.httpPost(
@@ -76,6 +78,6 @@ class TransloaditAssembly extends Options {
     bool isCancelled = status == "ASSEMBLY_CANCELED";
     bool isCompleted = status == "ASSEMBLY_COMPLETED";
     bool isFailed = response.data["error"].toString().isNotEmpty;
-    return isAborted || isCancelled || isCompleted || isFailed;
+    return isAborted || isCancelled || isCompleted;
   }
 }
