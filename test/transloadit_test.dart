@@ -1,15 +1,16 @@
+import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:transloadit/auth/keys.dart';
 import 'package:transloadit/transloadit.dart';
 
 void main() {
-  test('loading secrets', () async {
-    //TODO
-    Future<Secret> futureSecret =
-        SecretLoader(secretPath: "./lib/auth/test.json").load();
-    Secret secret = await futureSecret;
-    futureSecret.then((value) => expect(value.apikey, 'test'));
-  });
+  // test('loading secrets', () async {
+  //   //TODO
+  //   Future<Secret> futureSecret =
+  //       SecretLoader(secretPath: "./lib/auth/test.json").load();
+  //   Secret secret = await futureSecret;
+  //   futureSecret.then((value) => expect(value.apikey, 'test'));
+  // });
 
   group('client tests', () {
     TransloaditClient client = TransloaditClient(
@@ -19,6 +20,18 @@ void main() {
       TransloaditResponse response = await client.getAssembly(
           assemblyID: '0fcea03d1cc14b8abfea28db5e377428');
       expect(response.statusCode, 200);
+    });
+
+    test('create assembly', () async {
+      TransloaditAssembly assembly = client.createAssembly();
+      final imagePath = 'test/assets/cat.jpg';
+      //assembly.addFile(file: File(imagePath));
+      assembly.addStep("import", "/http/import",
+          {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
+      assembly.addStep("resize", "/image/resize", {"height": 400});
+      TransloaditResponse response = await assembly.createAssembly();
+
+      expect(response.data["ok"], "ASSEMBLY_COMPLETED");
     });
   });
 }

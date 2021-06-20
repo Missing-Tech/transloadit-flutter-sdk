@@ -42,8 +42,15 @@ class TransloaditClient {
     if (service.isEmpty) {
       serviceURL = service;
     }
-    final response =
-        await request.httpGet(service, assemblyPath + assemblyID, {});
+    final response = await request.httpGet(
+        service: service, params: {}, assemblyPath: assemblyPath + assemblyID);
     return response;
+  }
+
+  /// Creates an Assembly object with optional parameters.
+  TransloaditAssembly createAssembly({Map<String, dynamic>? params}) {
+    params = params ?? {};
+
+    return TransloaditAssembly(client: this, options: params);
   }
 }
