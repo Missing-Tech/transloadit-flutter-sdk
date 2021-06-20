@@ -47,6 +47,7 @@ class TransloaditClient {
     return response;
   }
 
+  /// Creates an Assembly object with optional parameters.
   TransloaditAssembly createAssembly({Map<String, dynamic>? params}) {
     params = params ?? {};
 

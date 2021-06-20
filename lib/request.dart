@@ -1,13 +1,18 @@
 part of transloadit;
 
+/// Transloadit tailored HTTP Request object.
 class TransloaditRequest {
+  /// Request headers to be used globally.
   final headers = {"Transloadit-Client": "flutter-sdk:" + "0.0.1"};
+
+  /// An instance of the Transloadit class.
   late TransloaditClient transloadit;
 
   TransloaditRequest(TransloaditClient transloadit) {
     this.transloadit = transloadit;
   }
 
+  /// Makes a HTTP GET request.
   Future<TransloaditResponse> httpGet(
       {required String service,
       required String assemblyPath,
@@ -23,6 +28,7 @@ class TransloaditRequest {
     return TransloaditResponse(response);
   }
 
+  /// Makes a HTTP POST request.
   Future<TransloaditResponse> httpPost(
       {required String service,
       required String assemblyPath,
@@ -45,6 +51,7 @@ class TransloaditRequest {
     return TransloaditResponse(response);
   }
 
+  /// Converts data into a payload format, with necessary fluff required for Transloadit.
   Map<String, dynamic>? toPayload(Map<String, dynamic> data) {
     if (data.isEmpty) {
       return null;
@@ -60,6 +67,7 @@ class TransloaditRequest {
     return {"params": jsonData, "signature": signData(jsonData)};
   }
 
+  /// Creates a signature for the data.
   String signData(message) {
     var key = utf8.encode(transloadit.authSecret);
     var bytes = utf8.encode(message);
@@ -67,13 +75,5 @@ class TransloaditRequest {
     var digest = hmac.convert(bytes);
 
     return digest.toString();
-  }
-
-  String getFullURL(String url) {
-    if (url.startsWith("www")) {
-      return url;
-    } else {
-      return transloadit.service + url;
-    }
   }
 }
