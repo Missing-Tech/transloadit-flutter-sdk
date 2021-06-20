@@ -23,7 +23,7 @@ void main() {
     });
 
     test('create assembly', () async {
-      TransloaditAssembly assembly = client.createAssembly(params: {});
+      TransloaditAssembly assembly = client.createAssembly();
       final imagePath = 'test/assets/cat.jpg';
       //assembly.addFile(file: File(imagePath));
       assembly.addStep("import", "/http/import",
