@@ -42,35 +42,36 @@ class TransloaditAssembly extends Options {
 
   /// Uploads files to the Assembly via the Tus protocol.
   Future<void> tusUpload(String assemblyURL, String tusURL) async {
+    Map<String, String> metadata = {"assembly_url": assemblyURL};
     if (files.isNotEmpty) {
       for (var key in files.keys) {
-        final metadata = {
-          "assembly_url": assemblyURL,
-          "fieldname": key,
-          "filename": basename(files[key]!.name)
-        };
-        final client = TusClient(Uri.parse(tusURL), files[key]!,
-            metadata: metadata, maxChunkSize: 5 * 1024 * 1024);
+        metadata["fieldname"] = key;
+        metadata["filename"] = basename(files[key]?.name ?? '');
 
-        await client.upload(onProgress: (progress) {
-          print(progress);
+        TusClient client = TusClient(Uri.parse(tusURL), files[key]!,
+            metadata: metadata, maxChunkSize: 10 * 1024 * 1024);
+
+        client.upload(onProgress: (progress) {
+          //TODO: Expose progress to be used in widgets
         });
       }
     }
   }
 
-  //TODO: fix TUS upload - can't upload before assembly starts executing
   /// Creates the Assembly using the options specified.
   Future<TransloaditResponse> createAssembly() async {
     final data = super.options;
-    final extraData = {"tus_num_expected_upload_files": files.length};
+    final extraData = {
+      "tus_num_expected_upload_files": files.length.toString()
+    };
     TransloaditResponse response = await client.request.httpPost(
         service: client.service,
         assemblyPath: "/assemblies",
         params: data,
         extraParams: extraData);
 
-    tusUpload(response.data["assembly_ssl_url"], response.data["tus_url"]);
+    await tusUpload(
+        response.data["assembly_ssl_url"], response.data["tus_url"]);
 
     while (!isAssemblyFinished(response)) {
       final url = response.data["assembly_ssl_url"].toString();
@@ -82,13 +83,13 @@ class TransloaditAssembly extends Options {
     return response;
   }
 
-  /// Not sure what this one does.
+  /// Not sure what this one does..
   bool isAssemblyFinished(TransloaditResponse response) {
     final status = response.data["ok"];
     bool isAborted = status == "REQUEST_ABORTED";
     bool isCancelled = status == "ASSEMBLY_CANCELED";
     bool isCompleted = status == "ASSEMBLY_COMPLETED";
-    bool isFailed = response.data["error"].toString().isNotEmpty;
-    return isAborted || isCancelled || isCompleted;
+    bool isFailed = response.data["error"] ?? false;
+    return isAborted || isCancelled || isCompleted || isFailed;
   }
 }

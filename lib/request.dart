@@ -38,11 +38,11 @@ class TransloaditRequest {
     params = params ?? {};
     extraParams = extraParams ?? {};
 
-    if (extraParams.isNotEmpty) {
-      params.addAll(extraParams);
-    }
-
     params = toPayload(params);
+
+    if (extraParams.isNotEmpty) {
+      params!.addAll(extraParams);
+    }
 
     uri = Uri.https(service, assemblyPath);
 
