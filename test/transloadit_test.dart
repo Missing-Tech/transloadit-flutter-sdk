@@ -1,6 +1,6 @@
+// @dart=2.9
 import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:transloadit/auth/keys.dart';
 import 'package:transloadit/transloadit.dart';
 
 void main() {
@@ -24,10 +24,18 @@ void main() {
 
     test('create assembly', () async {
       TransloaditAssembly assembly = client.createAssembly();
-      final imagePath = 'test/assets/cat.jpg';
-      //assembly.addFile(file: File(imagePath));
       assembly.addStep("import", "/http/import",
           {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
+      assembly.addStep("resize", "/image/resize", {"height": 400});
+      TransloaditResponse response = await assembly.createAssembly();
+
+      expect(response.data["ok"], "ASSEMBLY_COMPLETED");
+    });
+
+    test('create assembly with file', () async {
+      TransloaditAssembly assembly = client.createAssembly();
+      final imagePath = 'test/assets/cat.jpg';
+      assembly.addFile(file: File(imagePath));
       assembly.addStep("resize", "/image/resize", {"height": 400});
       TransloaditResponse response = await assembly.createAssembly();
 
