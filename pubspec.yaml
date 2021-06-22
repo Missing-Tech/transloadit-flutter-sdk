@@ -15,6 +15,9 @@ dependencies:
   http: ^0.13.3
   intl: ^0.17.0
   tus_client: ^1.0.0
+  cross_file: ^0.3.1
+  path: ^1.8.0
+  flutter_dotenv: ^5.0.0
 
 dev_dependencies:
   flutter_test:
