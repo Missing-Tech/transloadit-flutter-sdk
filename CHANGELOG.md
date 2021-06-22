@@ -1,3 +1,8 @@
 ## 0.0.1
 
-* TODO: Describe initial release.
+### Initial Release:
+- Getting assemblies
+- Creating assemblies
+- Uploading files
+- Running templates
+- Cancelling assemblies

@@ -16,6 +16,16 @@ void main() {
       authKey: '72a70fba93ce41cba617cfd7c2a44b1a',
       authSecret: '3b2845e9330051ed3adc06b4217c42e4f504f8f3');
 
+  test('run template', () async {
+    TransloaditAssembly assembly = client
+        .runTemplate(templateID: 'ddedc05f1b5d4910aa8e3ee341f46053', params: {
+      'fields': {'input': 'items.jpg'}
+    });
+    TransloaditResponse response = await assembly.createAssembly();
+
+    expect(response.data["ok"], "ASSEMBLY_COMPLETED");
+  });
+
   group('create', () {
     test('assembly', () async {
       TransloaditAssembly assembly = client.createAssembly();

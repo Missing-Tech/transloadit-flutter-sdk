@@ -15,6 +15,7 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [ ] Edit templates
 - [ ] Delete templates
 - [ ] Retrieve list of assemblies
+- [x] Run templates
 
 ## Basic Examples
 
@@ -44,4 +45,14 @@ assembly.addStep("resize", "/image/resize", {"height": 400});
 TransloaditResponse response = await assembly.createAssembly();
 
 print(response['ok']) // "ASSEMBLY_COMPLETED"
+```
+
+### Running template with fields
+```dart
+TransloaditAssembly assembly = client.runTemplate(
+        templateID: 'TEMPLATE_ID', 
+        params: {'fields': {'input': 'items.jpg'}});
+TransloaditResponse response = await assembly.createAssembly();
+
+print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
 ```

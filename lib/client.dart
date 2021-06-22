@@ -61,6 +61,16 @@ class TransloaditClient {
     return TransloaditAssembly(client: this, options: params);
   }
 
+  /// Creates an Assembly object from a template.
+  TransloaditAssembly runTemplate(
+      {required String templateID, Map<String, dynamic>? params}) {
+    Map<String, dynamic> options = {'template_id': templateID};
+    params = params ?? {};
+    options.addAll(params);
+    return TransloaditAssembly(client: this, options: options);
+  }
+
+  /// Cancels a running Assembly.
   Future<TransloaditResponse> cancelAssembly({
     String assemblyID = '',
     String assemblyURL = '',
