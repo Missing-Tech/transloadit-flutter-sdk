@@ -56,6 +56,3 @@ TransloaditResponse response = await assembly.createAssembly();
 
 print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
 ```
-
-## Development
-To get working tests fill in the values in the .env file.
