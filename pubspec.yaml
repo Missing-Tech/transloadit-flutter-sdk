@@ -1,6 +1,6 @@
 name: transloadit
 description: Flutter integration with Transloadit.
-version: 0.0.1
+version: 0.0.1-dev.1
 homepage: https://github.com/Missing-Tech/transloadit-flutter-sdk
 
 environment:
