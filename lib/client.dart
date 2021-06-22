@@ -35,15 +35,22 @@ class TransloaditClient {
   }
 
   /// Gets a Transloadit assembly from an ID
-  Future<TransloaditResponse> getAssembly(
-      {required String assemblyID,
-      String serviceURL = '',
-      String assemblyPath = '/assemblies/'}) async {
-    if (service.isEmpty) {
-      serviceURL = service;
+  Future<TransloaditResponse> getAssembly({
+    String assemblyID = '',
+    String assemblyURL = '',
+  }) async {
+    String _assemblyID = assemblyID;
+
+    if (assemblyID.isEmpty && assemblyURL.isEmpty) {
+      throw Exception('Either assemblyID or assemblyURL cannot be empty.');
     }
+
+    if (assemblyURL.isNotEmpty) {
+      _assemblyID = assemblyURL.substring(assemblyURL.lastIndexOf('/') + 1);
+    }
+
     final response = await request.httpGet(
-        service: service, params: {}, assemblyPath: assemblyPath + assemblyID);
+        service: service, params: {}, assemblyPath: "/assemblies/$_assemblyID");
     return response;
   }
 
@@ -52,5 +59,23 @@ class TransloaditClient {
     params = params ?? {};
 
     return TransloaditAssembly(client: this, options: params);
+  }
+
+  Future<TransloaditResponse> cancelAssembly({
+    String assemblyID = '',
+    String assemblyURL = '',
+  }) async {
+    String _assemblyID = assemblyID;
+
+    if (assemblyID.isEmpty && assemblyURL.isEmpty) {
+      throw Exception('Either assemblyID or assemblyURL cannot be empty.');
+    }
+
+    if (assemblyURL.isNotEmpty) {
+      _assemblyID = assemblyURL.substring(assemblyURL.lastIndexOf('/') + 1);
+    }
+
+    String url = 'assemblies/$_assemblyID';
+    return request.httpDelete(service: service, assemblyPath: url);
   }
 }
