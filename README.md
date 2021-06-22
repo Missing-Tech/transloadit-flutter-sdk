@@ -4,6 +4,18 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 
 # WIP
 
+- [x] Create assemblies
+- [x] Get assemblies
+- [x] Delete assemblies
+- [ ] Replay assemblies
+- [ ] Retrieve list of assemblies
+- [ ] Retrieve month's bill
+- [ ] Create templates
+- [ ] Get templates
+- [ ] Edit templates
+- [ ] Delete templates
+- [ ] Retrieve list of assemblies
+
 ## Basic Examples
 
 ### Creating client
