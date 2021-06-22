@@ -75,9 +75,7 @@ class TransloaditAssembly extends Options {
 
     while (!isAssemblyFinished(response)) {
       final url = response.data["assembly_ssl_url"].toString();
-      final assemblyID = url.substring(url.lastIndexOf('/') + 1);
-
-      response = await client.getAssembly(assemblyID: assemblyID);
+      response = await client.getAssembly(assemblyURL: url);
     }
 
     return response;

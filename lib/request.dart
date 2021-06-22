@@ -28,6 +28,22 @@ class TransloaditRequest {
     return TransloaditResponse(response);
   }
 
+  /// Makes a HTTP DELETE request.
+  Future<TransloaditResponse> httpDelete(
+      {required String service,
+      required String assemblyPath,
+      Map<String, dynamic>? params}) async {
+    final Uri uri;
+    params = params ?? {};
+    params = toPayload(params);
+
+    uri = Uri.https(service, assemblyPath, params);
+
+    Response response = await delete(uri, headers: headers);
+
+    return TransloaditResponse(response);
+  }
+
   /// Makes a HTTP POST request.
   Future<TransloaditResponse> httpPost(
       {required String service,
