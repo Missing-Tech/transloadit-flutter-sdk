@@ -15,3 +15,4 @@ part 'request.dart';
 part 'response.dart';
 part 'assembly.dart';
 part 'options.dart';
+part 'template.dart';

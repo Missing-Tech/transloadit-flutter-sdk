@@ -10,12 +10,13 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [ ] Replay assemblies
 - [ ] Retrieve list of assemblies
 - [ ] Retrieve month's bill
-- [ ] Create templates
-- [ ] Get templates
-- [ ] Edit templates
-- [ ] Delete templates
+- [x] Create templates
+- [x] Get templates
+- [x] Edit templates
+- [x] Delete templates
 - [ ] Retrieve list of assemblies
 - [x] Run templates
+- [ ] Error handling
 
 ## Basic Examples
 
@@ -35,7 +36,7 @@ print(response.statusCode) // 200
 
 ### Creating an assembly
 ```dart
-TransloaditAssembly assembly = client.createAssembly();
+TransloaditAssembly assembly = client.newAssembly();
 final imagePath = 'assets/cat.jpg';
 
 assembly.addStep("import", "/http/import",
@@ -45,6 +46,35 @@ assembly.addStep("resize", "/image/resize", {"height": 400});
 TransloaditResponse response = await assembly.createAssembly();
 
 print(response['ok']) // "ASSEMBLY_COMPLETED"
+```
+
+### Creating a template
+```dart
+TransloaditTemplate template = client.newTemplate(name: "template");
+
+template.addStep("import", "/http/import",
+          {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
+template.addStep("resize", "/image/resize", {"use": "import", "height": 400});
+
+TransloaditResponse response = await template.createTemplate();
+
+print(response['ok']) // "TEMPLATE_CREATED"
+```
+
+### Updating a template
+```dart
+TransloaditResponse response = await client.updateTemplate(
+        templateID: 'TEMPLATE_ID',
+        template: {
+          "import": {
+            "robot": "/http/import",
+            "url": "https://demos.transloadit.com/inputs/chameleon.jpg"
+          },
+          "resize": {"use": "import", "robot": "/image/resize", "height": 200}
+        },
+      );
+
+print(response['ok']) // "TEMPLATE_UPDATED"
 ```
 
 ### Running template with fields

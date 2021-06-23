@@ -1,7 +1,7 @@
 part of transloadit;
 
 /// Object representation of a new Assembly to be created.
-class TransloaditAssembly extends Options {
+class TransloaditAssembly extends TransloaditOptions {
   /// An instance of the Transloadit class.
   late TransloaditClient client;
 
@@ -21,7 +21,7 @@ class TransloaditAssembly extends Options {
     this.files = files ?? {};
   }
 
-  /// Add a file to be uploaded along with the Assembly.
+  /// Add a [file] to be uploaded along with the Assembly.
   void addFile({required File file, String? fieldName}) {
     fieldName = fieldName ?? getFieldName();
     files[fieldName] = XFile(file.path);
