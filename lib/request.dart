@@ -39,9 +39,25 @@ class TransloaditRequest {
 
     print(params);
 
+    uri = Uri.https(service, assemblyPath);
+
+    Response response = await delete(uri, body: params, headers: headers);
+
+    return TransloaditResponse(response);
+  }
+
+  /// Makes a HTTP PUT request.
+  Future<TransloaditResponse> httpPut(
+      {required String service,
+      required String assemblyPath,
+      Map<String, dynamic>? params}) async {
+    final Uri uri;
+    params = params ?? {};
+    params = toPayload(params);
+
     uri = Uri.https(service, assemblyPath, params);
 
-    Response response = await delete(uri, headers: headers);
+    Response response = await put(uri, body: params, headers: headers);
 
     return TransloaditResponse(response);
   }
@@ -69,7 +85,7 @@ class TransloaditRequest {
     return TransloaditResponse(response);
   }
 
-  /// Converts data into a payload format, with necessary fluff required for Transloadit.
+  /// Converts [data] into a payload format, with necessary fluff required for Transloadit.
   Map<String, dynamic>? toPayload(Map<String, dynamic> data) {
     DateTime expiry =
         DateTime.now().add(Duration(seconds: transloadit.duration));
@@ -82,10 +98,10 @@ class TransloaditRequest {
     return {"params": jsonData, "signature": signData(jsonData)};
   }
 
-  /// Creates a signature for the data.
-  String signData(message) {
+  /// Creates a signature for the [data].
+  String signData(String data) {
     var key = utf8.encode(transloadit.authSecret);
-    var bytes = utf8.encode(message);
+    var bytes = utf8.encode(data);
     var hmac = Hmac(sha1, key);
     var digest = hmac.convert(bytes);
 

@@ -19,13 +19,13 @@ class TransloaditOptions {
     steps = {};
   }
 
-  /// Adds a step to the Assembly/Template
+  /// Adds a step to the Assembly/Template, with the given [robot] and [options]
   void addStep(String name, String robot, Map<String, dynamic> options) {
     options["robot"] = robot;
     steps[name] = options;
   }
 
-  /// Removes a step from the Assembly/Template
+  /// Removes a step from the Assembly/Template with this [name]
   void removeStep(String name) {
     steps.remove(name);
   }

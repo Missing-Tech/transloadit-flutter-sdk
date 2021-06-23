@@ -11,9 +11,9 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [ ] Retrieve list of assemblies
 - [ ] Retrieve month's bill
 - [x] Create templates
-- [ ] Get templates
-- [ ] Edit templates
-- [ ] Delete templates
+- [x] Get templates
+- [x] Edit templates
+- [x] Delete templates
 - [ ] Retrieve list of assemblies
 - [x] Run templates
 - [ ] Error handling
@@ -54,7 +54,7 @@ TransloaditTemplate template = client.newTemplate(name: "template");
 
 template.addStep("import", "/http/import",
           {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
-template.addStep("resize", "/image/resize", {"height": 400});
+template.addStep("resize", "/image/resize", {"use": "import", "height": 400});
 
 TransloaditResponse response = await template.createTemplate();
 

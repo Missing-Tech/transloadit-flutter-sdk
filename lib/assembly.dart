@@ -21,7 +21,7 @@ class TransloaditAssembly extends TransloaditOptions {
     this.files = files ?? {};
   }
 
-  /// Add a file to be uploaded along with the Assembly.
+  /// Add a [file] to be uploaded along with the Assembly.
   void addFile({required File file, String? fieldName}) {
     fieldName = fieldName ?? getFieldName();
     files[fieldName] = XFile(file.path);
