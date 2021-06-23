@@ -61,6 +61,22 @@ TransloaditResponse response = await template.createTemplate();
 print(response['ok']) // "TEMPLATE_CREATED"
 ```
 
+### Updating a template
+```dart
+TransloaditResponse response = await client.updateTemplate(
+        templateID: 'TEMPLATE_ID',
+        template: {
+          "import": {
+            "robot": "/http/import",
+            "url": "https://demos.transloadit.com/inputs/chameleon.jpg"
+          },
+          "resize": {"use": "import", "robot": "/image/resize", "height": 200}
+        },
+      );
+
+print(response['ok']) // "TEMPLATE_UPDATED"
+```
+
 ### Running template with fields
 ```dart
 TransloaditAssembly assembly = client.runTemplate(

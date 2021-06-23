@@ -135,6 +135,7 @@ class TransloaditClient {
     return response;
   }
 
+  /// Gets the current instructions of a template
   Future<Map<String, dynamic>> getCurrentInstructions(String templateID) async {
     TransloaditResponse response = await getTemplate(templateID: templateID);
     return response.data["content"];
