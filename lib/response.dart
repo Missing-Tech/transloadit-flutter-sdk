@@ -1,5 +1,6 @@
 part of transloadit;
 
+/// Custom HTTP Response object
 class TransloaditResponse {
   /// Dictionary representation of the returned JSON data.
   late Map<String, dynamic> _data;

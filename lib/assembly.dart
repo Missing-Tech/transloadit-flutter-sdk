@@ -1,7 +1,7 @@
 part of transloadit;
 
 /// Object representation of a new Assembly to be created.
-class TransloaditAssembly extends Options {
+class TransloaditAssembly extends TransloaditOptions {
   /// An instance of the Transloadit class.
   late TransloaditClient client;
 

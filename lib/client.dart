@@ -55,19 +55,10 @@ class TransloaditClient {
   }
 
   /// Creates an Assembly object with optional parameters.
-  TransloaditAssembly createAssembly({Map<String, dynamic>? params}) {
+  TransloaditAssembly newAssembly({Map<String, dynamic>? params}) {
     params = params ?? {};
 
     return TransloaditAssembly(client: this, options: params);
-  }
-
-  /// Creates an Assembly object from a template.
-  TransloaditAssembly runTemplate(
-      {required String templateID, Map<String, dynamic>? params}) {
-    Map<String, dynamic> options = {'template_id': templateID};
-    params = params ?? {};
-    options.addAll(params);
-    return TransloaditAssembly(client: this, options: options);
   }
 
   /// Cancels a running Assembly.
@@ -86,6 +77,40 @@ class TransloaditClient {
     }
 
     String url = 'assemblies/$_assemblyID';
+    return request.httpDelete(service: service, assemblyPath: url);
+  }
+
+  /// Creates an Template object with optional parameters.
+  TransloaditTemplate newTemplate(
+      {required String name, Map<String, dynamic>? params}) {
+    params = params ?? {};
+
+    return TransloaditTemplate(name: name, options: params, client: this);
+  }
+
+  /// Creates an Assembly object from a template.
+  TransloaditAssembly runTemplate(
+      {required String templateID, Map<String, dynamic>? params}) {
+    Map<String, dynamic> options = {'template_id': templateID};
+    params = params ?? {};
+    options.addAll(params);
+    return TransloaditAssembly(client: this, options: options);
+  }
+
+  /// Gets a Transloadit template from an ID
+  Future<TransloaditResponse> getTemplate({
+    required String templateID,
+  }) async {
+    final response = await request.httpGet(
+        service: service, assemblyPath: "/templates/$templateID");
+    return response;
+  }
+
+  /// Deletes a Template of a given ID.
+  Future<TransloaditResponse> deleteTemplate({
+    required String templateID,
+  }) async {
+    String url = 'templates/$templateID';
     return request.httpDelete(service: service, assemblyPath: url);
   }
 }

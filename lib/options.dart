@@ -1,7 +1,7 @@
 part of transloadit;
 
 /// Abstract class representation of options included in Assembly/Template.
-class Options {
+class TransloaditOptions {
   /// An instance of the Transloadit class.
   late TransloaditClient client;
 
@@ -14,7 +14,7 @@ class Options {
   /// Temporary storage of steps, later converted to options.
   late Map<String, dynamic> steps;
 
-  Options({Map<String, dynamic>? options}) {
+  TransloaditOptions({Map<String, dynamic>? options}) {
     options = options ?? {};
     steps = {};
   }
@@ -30,7 +30,7 @@ class Options {
     steps.remove(name);
   }
 
-  /// Returns the Assembly/Template options in a Transloadit-ready format.
+  /// Returns the Assembly options in a Transloadit-ready format.
   Map<String, dynamic> get options {
     final _optionsCopy = _options ?? {};
     _optionsCopy["steps"] = steps;

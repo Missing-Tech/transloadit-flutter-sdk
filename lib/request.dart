@@ -37,6 +37,8 @@ class TransloaditRequest {
     params = params ?? {};
     params = toPayload(params);
 
+    print(params);
+
     uri = Uri.https(service, assemblyPath, params);
 
     Response response = await delete(uri, headers: headers);
@@ -69,9 +71,6 @@ class TransloaditRequest {
 
   /// Converts data into a payload format, with necessary fluff required for Transloadit.
   Map<String, dynamic>? toPayload(Map<String, dynamic> data) {
-    if (data.isEmpty) {
-      return null;
-    }
     DateTime expiry =
         DateTime.now().add(Duration(seconds: transloadit.duration));
 
