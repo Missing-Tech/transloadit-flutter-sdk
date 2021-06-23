@@ -2,13 +2,15 @@
 
 Flutter integration with [Transloadit](https://transloadit.com/)
 
-# WIP
+# WIP - 1.0 Release
 
 - [x] Create assemblies
 - [x] Get assemblies
 - [x] Delete assemblies
 - [ ] Replay assemblies
 - [ ] Retrieve list of assemblies
+- [ ] Replay assembly notification
+- [ ] Retrieve list of assembly notifications
 - [ ] Retrieve month's bill
 - [x] Create templates
 - [x] Get templates
@@ -17,6 +19,7 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [ ] Retrieve list of assemblies
 - [x] Run templates
 - [ ] Error handling
+- [ ] Better tests
 
 ## Basic Examples
 
