@@ -74,21 +74,21 @@ void main() {
     test('add one', () {
       File cat = File('test/assets/cat.jpg');
       assembly.addFile(file: cat, fieldName: "file");
-      expect(assembly.files["file"]!.name, cat.path);
+      expect(assembly.files["file"]!.path, cat.path);
     });
 
     test('add multiple', () {
       File cat = File('test/assets/cat.jpg');
       for (var i = 0; i < 3; i++) {
         assembly.addFile(file: cat, fieldName: "file_$i");
-        expect(assembly.files["file_$i"]!.name, cat.path);
+        expect(assembly.files["file_$i"]!.path, cat.path);
       }
     });
 
     test('remove', () {
       File cat = File('test/assets/cat.jpg');
       assembly.addFile(file: cat, fieldName: "remove_me");
-      expect(assembly.files["remove_me"]!.name, cat.path);
+      expect(assembly.files["remove_me"]!.path, cat.path);
       assembly.removeFile(fieldName: "remove_me");
       expect(assembly.files.containsKey("remove_me"), false);
     });
@@ -96,7 +96,7 @@ void main() {
     test('remove all', () {
       File cat = File('test/assets/cat.jpg');
       assembly.addFile(file: cat, fieldName: "file");
-      expect(assembly.files["file"]!.name, cat.path);
+      expect(assembly.files["file"]!.path, cat.path);
       assembly.clearFiles();
       expect(assembly.files.length, 0);
     });
