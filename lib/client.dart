@@ -160,7 +160,7 @@ class TransloaditClient {
     return response.data["content"];
   }
 
-  /// Deletes a Template of a given [templateID ].
+  /// Deletes a Template of a given [templateID].
   Future<TransloaditResponse> deleteTemplate({
     required String templateID,
   }) async {
