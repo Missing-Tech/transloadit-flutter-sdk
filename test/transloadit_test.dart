@@ -72,13 +72,13 @@ void main() {
   group('file', () {
     TransloaditAssembly assembly = transloaditClient.newAssembly();
     test('add one', () {
-      File cat = File('test/assets/cat.jpg');
+      File cat = File('cat.jpg');
       assembly.addFile(file: cat, fieldName: "file");
       expect(assembly.files["file"]!.path, cat.path);
     });
 
     test('add multiple', () {
-      File cat = File('test/assets/cat.jpg');
+      File cat = File('cat.jpg');
       for (var i = 0; i < 3; i++) {
         assembly.addFile(file: cat, fieldName: "file_$i");
         expect(assembly.files["file_$i"]!.path, cat.path);
@@ -86,7 +86,7 @@ void main() {
     });
 
     test('remove', () {
-      File cat = File('test/assets/cat.jpg');
+      File cat = File('cat.jpg');
       assembly.addFile(file: cat, fieldName: "remove_me");
       expect(assembly.files["remove_me"]!.path, cat.path);
       assembly.removeFile(fieldName: "remove_me");
@@ -94,7 +94,7 @@ void main() {
     });
 
     test('remove all', () {
-      File cat = File('test/assets/cat.jpg');
+      File cat = File('cat.jpg');
       assembly.addFile(file: cat, fieldName: "file");
       expect(assembly.files["file"]!.path, cat.path);
       assembly.clearFiles();
