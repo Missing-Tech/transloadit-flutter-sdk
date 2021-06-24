@@ -70,8 +70,10 @@ class TransloaditAssembly extends TransloaditOptions {
         params: data,
         extraParams: extraData);
 
-    await tusUpload(
-        response.data["assembly_ssl_url"], response.data["tus_url"]);
+    if (response.data.containsKey("assembly_ssl_url")) {
+      await tusUpload(
+          response.data["assembly_ssl_url"], response.data["tus_url"]);
+    }
 
     while (!isAssemblyFinished(response)) {
       final url = response.data["assembly_ssl_url"].toString();

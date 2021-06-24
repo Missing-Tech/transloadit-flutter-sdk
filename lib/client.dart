@@ -89,7 +89,7 @@ class TransloaditClient {
   }
 
   /// Creates an Assembly object from a template.
-  TransloaditAssembly runTemplate(
+  TransloaditAssembly assemblyFromTemplate(
       {required String templateID, Map<String, dynamic>? params}) {
     Map<String, dynamic> options = {'template_id': templateID};
     params = params ?? {};
