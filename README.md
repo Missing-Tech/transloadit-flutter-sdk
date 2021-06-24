@@ -8,9 +8,9 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Get assemblies
 - [x] Delete assemblies
 - [x] Add files
-- [ ] Remove files
-- [ ] Replay assemblies
-- [ ] Retrieve list of assemblies
+- [x] Remove files
+- [x] Replay assemblies
+- [x] Retrieve list of assemblies
 - [ ] Replay assembly notification
 - [ ] Retrieve list of assembly notifications
 - [ ] Retrieve month's bill
@@ -18,7 +18,6 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Get templates
 - [x] Edit templates
 - [x] Delete templates
-- [ ] Retrieve list of assemblies
 - [x] Run templates
 - [ ] Error handling
 - [x] Better tests

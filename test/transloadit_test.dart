@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nock/nock.dart';
-import 'package:path/path.dart';
 import 'package:transloadit/transloadit.dart';
 
 void main() {
@@ -28,10 +27,24 @@ void main() {
           '{"ok": "ASSEMBLY_COMPLETED", "assembly_id": "$id"}',
         );
 
-      print(nock.pendingMocks);
-
       TransloaditResponse tlResponse =
           await transloaditClient.getAssembly(assemblyID: id);
+
+      expect(tlResponse.statusCode, 200);
+      expect(tlResponse.data["ok"], "ASSEMBLY_COMPLETED");
+      expect(tlResponse.data["assembly_id"], "abcdef12345");
+    });
+
+    test('list of assemblies', () async {
+      var id = "abcdef12345";
+
+      nock.get(startsWith("/assemblies"))
+        ..reply(
+          200,
+          '{"ok": "ASSEMBLY_COMPLETED", "assembly_id": "$id"}',
+        );
+
+      TransloaditResponse tlResponse = await transloaditClient.listAssemblies();
 
       expect(tlResponse.statusCode, 200);
       expect(tlResponse.data["ok"], "ASSEMBLY_COMPLETED");
@@ -68,9 +81,24 @@ void main() {
       File cat = File('test/assets/cat.jpg');
       for (var i = 0; i < 3; i++) {
         assembly.addFile(file: cat, fieldName: "file_$i");
-        print(assembly.files);
         expect(assembly.files["file_$i"]!.name, cat.path);
       }
+    });
+
+    test('remove', () {
+      File cat = File('test/assets/cat.jpg');
+      assembly.addFile(file: cat, fieldName: "remove_me");
+      expect(assembly.files["remove_me"]!.name, cat.path);
+      assembly.removeFile(fieldName: "remove_me");
+      expect(assembly.files.containsKey("remove_me"), false);
+    });
+
+    test('remove all', () {
+      File cat = File('test/assets/cat.jpg');
+      assembly.addFile(file: cat, fieldName: "file");
+      expect(assembly.files["file"]!.name, cat.path);
+      assembly.clearFiles();
+      expect(assembly.files.length, 0);
     });
   });
 
@@ -108,6 +136,22 @@ void main() {
       expect(tlResponse.statusCode, 200);
       expect(tlResponse.data["ok"], "ASSEMBLY_COMPLETED");
       expect(tlResponse.data["assembly_id"], "abcdef12345");
+    });
+
+    test('replay assembly', () async {
+      var id = "abcdef12345";
+
+      nock.post(startsWith("/assemblies/$id/replay"))
+        ..reply(
+          200,
+          '{"ok": "ASSEMBLY_REPLAYING"}',
+        );
+
+      TransloaditResponse tlResponse =
+          await transloaditClient.replayAssembly(assemblyID: id);
+
+      expect(tlResponse.statusCode, 200);
+      expect(tlResponse.data["ok"], "ASSEMBLY_REPLAYING");
     });
 
     test('assembly from template', () async {
