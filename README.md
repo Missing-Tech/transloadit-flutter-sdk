@@ -7,7 +7,7 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Create assemblies
 - [x] Get assemblies
 - [x] Delete assemblies
-- [ ] Add files
+- [x] Add files
 - [ ] Remove files
 - [ ] Replay assemblies
 - [ ] Retrieve list of assemblies
