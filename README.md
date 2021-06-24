@@ -1,3 +1,5 @@
+[![Dart](https://github.com/Missing-Tech/transloadit-flutter-sdk/actions/workflows/dart.yml/badge.svg?branch=main)](https://github.com/Missing-Tech/transloadit-flutter-sdk/actions/workflows/dart.yml)
+
 # Transloadit Flutter SDK
 
 Flutter integration with [Transloadit](https://transloadit.com/)
