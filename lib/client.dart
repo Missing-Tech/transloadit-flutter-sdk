@@ -54,6 +54,14 @@ class TransloaditClient {
     return response;
   }
 
+  /// Gets a list of Transloadit assemblies
+  Future<TransloaditResponse> listAssemblies(
+      {Map<String, dynamic>? params}) async {
+    final response = await request.httpGet(
+        service: service, params: {}, assemblyPath: "/assemblies");
+    return response;
+  }
+
   /// Creates an Assembly object with optional [params].
   TransloaditAssembly newAssembly({Map<String, dynamic>? params}) {
     params = params ?? {};
@@ -78,6 +86,17 @@ class TransloaditClient {
 
     String url = 'assemblies/$_assemblyID';
     return request.httpDelete(service: service, assemblyPath: url);
+  }
+
+  /// Attempts to recover the input files and retry the execution of an Assembly
+  /// Specify [params] to change details of the Assembly
+  /// https://transloadit.com/docs/api/#supported-keys-inside-the-params-field
+  Future<TransloaditResponse> replayAssembly(
+      {required String assemblyID, Map<String, dynamic>? params}) {
+    params = params ?? {};
+
+    String url = 'assemblies/$assemblyID/replay';
+    return request.httpPost(service: service, assemblyPath: url);
   }
 
   /// Creates an Template object with optional [params].

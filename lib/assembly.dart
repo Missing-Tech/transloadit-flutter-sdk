@@ -27,6 +27,16 @@ class TransloaditAssembly extends TransloaditOptions {
     files[fieldName] = XFile(file.path);
   }
 
+  /// Removes a file with the given [fieldName]
+  void removeFile({required String fieldName}) {
+    files.remove(fieldName);
+  }
+
+  /// Removes all files
+  void clearFiles() {
+    files.clear();
+  }
+
   /// Creates a unique field-name for each file.
   String getFieldName() {
     String name = "file";
