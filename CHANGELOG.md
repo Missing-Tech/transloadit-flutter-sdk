@@ -13,3 +13,14 @@
 - Updating templates
 - Deleting templates
 - Better documentation
+
+## 0.0.1-dev.3
+
+- Remove files
+- Replay assemblies
+- Retrieve list of assemblies
+- Replay assembly notification
+- Retrieve list of assembly notifications
+- Retrieve month's bill
+- Get priority job slots
+- Better tests
