@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/intl.dart';
 import 'package:nock/nock.dart';
 import 'package:transloadit/transloadit.dart';
 
@@ -18,6 +19,23 @@ void main() {
   });
 
   group('get', () {
+    test('bill', () async {
+      var date = DateTime.now();
+      var dateString = DateFormat('yyyy-MM').format(date);
+
+      nock.get(startsWith("/bill/$dateString"))
+        ..reply(
+          200,
+          '{"ok": "BILL_FOUND", "date": "$dateString"}',
+        );
+
+      TransloaditResponse tlResponse =
+          await transloaditClient.getBill(date: date);
+
+      expect(tlResponse.statusCode, 200);
+      expect(tlResponse.data["ok"], "BILL_FOUND");
+      expect(tlResponse.data["date"], dateString);
+    });
     test('assembly', () async {
       var id = "abcdef12345";
 
@@ -174,14 +192,14 @@ void main() {
     test('replay assembly notification', () async {
       var id = "abcdef12345";
 
-      nock.post(startsWith("/assembly_notification/$id/replay"))
+      nock.post(startsWith("/assembly_notifications/$id/replay"))
         ..reply(
           200,
           '{"ok": "ASSEMBLY_REPLAYING"}',
         );
 
       TransloaditResponse tlResponse =
-          await transloaditClient.replayAssembly(assemblyID: id);
+          await transloaditClient.replayAssemblyNotification(assemblyID: id);
 
       expect(tlResponse.statusCode, 200);
       expect(tlResponse.data["ok"], "ASSEMBLY_REPLAYING");

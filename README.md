@@ -15,7 +15,7 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Retrieve list of assemblies
 - [x] Replay assembly notification
 - [x] Retrieve list of assembly notifications
-- [ ] Retrieve month's bill
+- [x] Retrieve month's bill
 - [x] Create templates
 - [x] Get templates
 - [x] Edit templates

@@ -161,7 +161,7 @@ class TransloaditClient {
     // TODO: Implement instruction merging
     // if (merge) {
     //   Map<String, dynamic> currentInstructions = {};
-    //   getCurrentInstructions(templateID)
+    //   _getCurrentInstructions(templateID)
     //       .then((value) => currentInstructions = value);
     //   for (var key in template.keys) {}
     //   print(currentInstructions);
@@ -175,7 +175,8 @@ class TransloaditClient {
   }
 
   /// Gets the current instructions of a template
-  Future<Map<String, dynamic>> getCurrentInstructions(String templateID) async {
+  Future<Map<String, dynamic>> _getCurrentInstructions(
+      String templateID) async {
     TransloaditResponse response = await getTemplate(templateID: templateID);
     return response.data["content"];
   }
@@ -186,5 +187,14 @@ class TransloaditClient {
   }) async {
     return request.httpDelete(
         service: service, assemblyPath: 'templates/$templateID');
+  }
+
+  /// Gets the bill for a given [date]
+  /// Example response body: https://transloadit.com/docs/api/#response
+  Future<TransloaditResponse> getBill({required DateTime date}) async {
+    final String dateString = DateFormat('yyyy-MM').format(date);
+    final response = await request.httpGet(
+        service: service, assemblyPath: "/bill/$dateString");
+    return response;
   }
 }
