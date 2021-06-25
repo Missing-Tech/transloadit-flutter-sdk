@@ -197,4 +197,11 @@ class TransloaditClient {
         service: service, assemblyPath: "/bill/$dateString");
     return response;
   }
+
+  /// Retrieves the sum of priority job slots that are currently in use in the [count] field of the response
+  Future<TransloaditResponse> getJobSlots() async {
+    final response = await request.httpGet(
+        service: service, assemblyPath: "/queues/job_slots");
+    return response;
+  }
 }

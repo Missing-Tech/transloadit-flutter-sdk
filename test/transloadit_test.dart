@@ -36,6 +36,20 @@ void main() {
       expect(tlResponse.data["ok"], "BILL_FOUND");
       expect(tlResponse.data["date"], dateString);
     });
+
+    test('job slots', () async {
+      nock.get(startsWith("/queues/job_slots"))
+        ..reply(
+          200,
+          '{"ok": "PRIORITY_JOB_SLOTS_FOUND", "priority_job_slots": {"count": 300}}',
+        );
+
+      TransloaditResponse tlResponse = await transloaditClient.getJobSlots();
+
+      expect(tlResponse.statusCode, 200);
+      expect(tlResponse.data["ok"], "PRIORITY_JOB_SLOTS_FOUND");
+      expect(tlResponse.data["priority_job_slots"]["count"], 300);
+    });
     test('assembly', () async {
       var id = "abcdef12345";
 
