@@ -175,11 +175,11 @@ class TransloaditClient {
   }
 
   /// Gets the current instructions of a template
-  Future<Map<String, dynamic>> _getCurrentInstructions(
-      String templateID) async {
-    TransloaditResponse response = await getTemplate(templateID: templateID);
-    return response.data["content"];
-  }
+  // Future<Map<String, dynamic>> _getCurrentInstructions(
+  //     String templateID) async {
+  //   TransloaditResponse response = await getTemplate(templateID: templateID);
+  //   return response.data["content"];
+  // }
 
   /// Deletes a Template of a given [templateID].
   Future<TransloaditResponse> deleteTemplate({
