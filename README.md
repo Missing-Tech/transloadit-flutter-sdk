@@ -13,8 +13,8 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Remove files
 - [x] Replay assemblies
 - [x] Retrieve list of assemblies
-- [ ] Replay assembly notification
-- [ ] Retrieve list of assembly notifications
+- [x] Replay assembly notification
+- [x] Retrieve list of assembly notifications
 - [ ] Retrieve month's bill
 - [x] Create templates
 - [x] Get templates

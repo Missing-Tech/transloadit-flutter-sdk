@@ -51,6 +51,23 @@ void main() {
       expect(tlResponse.data["assembly_id"], "abcdef12345");
     });
 
+    test('list of assembly notifications', () async {
+      var id = "abcdef12345";
+
+      nock.get(startsWith("/assembly_notifications"))
+        ..reply(
+          200,
+          '{"ok": "FOUND_NOTIFICATIONS", "assembly_id": "$id"}',
+        );
+
+      TransloaditResponse tlResponse =
+          await transloaditClient.getAssemblyNotifications();
+
+      expect(tlResponse.statusCode, 200);
+      expect(tlResponse.data["ok"], "FOUND_NOTIFICATIONS");
+      expect(tlResponse.data["assembly_id"], "abcdef12345");
+    });
+
     test('template', () async {
       var id = "abcdef12345";
 
@@ -142,6 +159,22 @@ void main() {
       var id = "abcdef12345";
 
       nock.post(startsWith("/assemblies/$id/replay"))
+        ..reply(
+          200,
+          '{"ok": "ASSEMBLY_REPLAYING"}',
+        );
+
+      TransloaditResponse tlResponse =
+          await transloaditClient.replayAssembly(assemblyID: id);
+
+      expect(tlResponse.statusCode, 200);
+      expect(tlResponse.data["ok"], "ASSEMBLY_REPLAYING");
+    });
+
+    test('replay assembly notification', () async {
+      var id = "abcdef12345";
+
+      nock.post(startsWith("/assembly_notification/$id/replay"))
         ..reply(
           200,
           '{"ok": "ASSEMBLY_REPLAYING"}',

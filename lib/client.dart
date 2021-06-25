@@ -50,7 +50,7 @@ class TransloaditClient {
     }
 
     final response = await request.httpGet(
-        service: service, params: {}, assemblyPath: "/assemblies/$_assemblyID");
+        service: service, assemblyPath: "/assemblies/$_assemblyID");
     return response;
   }
 
@@ -58,7 +58,7 @@ class TransloaditClient {
   Future<TransloaditResponse> listAssemblies(
       {Map<String, dynamic>? params}) async {
     final response = await request.httpGet(
-        service: service, params: {}, assemblyPath: "/assemblies");
+        service: service, params: params, assemblyPath: "/assemblies");
     return response;
   }
 
@@ -95,8 +95,28 @@ class TransloaditClient {
       {required String assemblyID, Map<String, dynamic>? params}) {
     params = params ?? {};
 
-    String url = 'assemblies/$assemblyID/replay';
-    return request.httpPost(service: service, assemblyPath: url);
+    String url = '/assemblies/$assemblyID/replay';
+    return request.httpPost(
+        service: service, assemblyPath: url, params: params);
+  }
+
+  /// Replays an Assembly Notification of a given [assemblyID]
+  Future<TransloaditResponse> replayAssemblyNotification(
+      {required String assemblyID, Map<String, dynamic>? params}) {
+    params = params ?? {};
+
+    String url = '/assembly_notifications/$assemblyID/replay';
+    return request.httpPost(
+        service: service, assemblyPath: url, params: params);
+  }
+
+  /// Retrieves a list of recent Assembly Notifications
+  Future<TransloaditResponse> getAssemblyNotifications(
+      {Map<String, dynamic>? params}) {
+    params = params ?? {};
+
+    String url = '/assembly_notifications';
+    return request.httpGet(service: service, assemblyPath: url, params: params);
   }
 
   /// Creates an Template object with optional [params].
