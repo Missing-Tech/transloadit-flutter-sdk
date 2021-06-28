@@ -24,3 +24,8 @@
 - Retrieve month's bill
 - Get priority job slots
 - Better tests
+
+## 0.0.1-dev.4
+
+- Fixed params not sending
+- Working test suite
