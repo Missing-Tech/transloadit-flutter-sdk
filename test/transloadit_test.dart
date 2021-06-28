@@ -154,8 +154,10 @@ void main() {
   group('update', () {
     test('template', () async {
       var id = "abcdef12345";
-      nock.put(startsWith('/templates/$id'))
-        ..reply(
+      nock.put(
+        startsWith('/templates/$id'),
+        (Map<String, dynamic> body) => true,
+      )..reply(
           200,
           '{"ok": "TEMPLATE_UPDATED", "template_id": "$id"}',
         );
@@ -173,8 +175,10 @@ void main() {
     test('assembly', () async {
       var id = "abcdef12345";
 
-      nock.post(startsWith("/assemblies"))
-        ..reply(
+      nock.post(
+        startsWith("/assemblies"),
+        (Map<String, dynamic> body) => true,
+      )..reply(
           200,
           '{"ok": "ASSEMBLY_COMPLETED", "assembly_id": "$id"}',
         );
@@ -190,8 +194,10 @@ void main() {
     test('replay assembly', () async {
       var id = "abcdef12345";
 
-      nock.post(startsWith("/assemblies/$id/replay"))
-        ..reply(
+      nock.post(
+        startsWith("/assemblies/$id/replay"),
+        (Map<String, dynamic> body) => true,
+      )..reply(
           200,
           '{"ok": "ASSEMBLY_REPLAYING"}',
         );
@@ -206,8 +212,10 @@ void main() {
     test('replay assembly notification', () async {
       var id = "abcdef12345";
 
-      nock.post(startsWith("/assembly_notifications/$id/replay"))
-        ..reply(
+      nock.post(
+        startsWith("/assembly_notifications/$id/replay"),
+        (Map<String, dynamic> body) => true,
+      )..reply(
           200,
           '{"ok": "ASSEMBLY_REPLAYING"}',
         );
@@ -222,8 +230,10 @@ void main() {
     test('assembly from template', () async {
       var id = "abcdef12345";
 
-      nock.post(startsWith("/assemblies"))
-        ..reply(
+      nock.post(
+        startsWith("/assemblies"),
+        (Map<String, dynamic> body) => true,
+      )..reply(
           200,
           '{"ok": "ASSEMBLY_COMPLETED", "template_id": "$id"}',
         );
@@ -242,8 +252,10 @@ void main() {
     test('template', () async {
       TransloaditTemplate template =
           transloaditClient.newTemplate(name: "Test");
-      nock.post(startsWith("/templates"))
-        ..reply(
+      nock.post(
+        startsWith("/templates"),
+        (Map<String, dynamic> body) => true,
+      )..reply(
           200,
           '{"ok": "TEMPLATE_CREATED"}',
         );
@@ -257,7 +269,10 @@ void main() {
     test('assembly', () async {
       var id = "abcdef12345";
 
-      nock.delete(startsWith("/assemblies/$id"))..reply(200, '{}');
+      nock.delete(
+        startsWith("/assemblies/$id"),
+        (Map<String, dynamic> body) => true,
+      )..reply(200, '{}');
 
       TransloaditResponse tlResponse =
           await transloaditClient.cancelAssembly(assemblyID: id);
@@ -268,8 +283,10 @@ void main() {
     test('template', () async {
       var id = "abcdef12345";
 
-      nock.delete(startsWith("/templates/$id"))
-        ..reply(200, '{"ok": "TEMPLATE_DELETED"}');
+      nock.delete(
+        startsWith("/templates/$id"),
+        (Map<String, dynamic> body) => true,
+      )..reply(200, '{"ok": "TEMPLATE_DELETED"}');
 
       TransloaditResponse tlResponse =
           await transloaditClient.deleteTemplate(templateID: id);
