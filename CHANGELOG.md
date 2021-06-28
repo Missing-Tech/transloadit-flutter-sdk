@@ -29,3 +29,7 @@
 
 - Fixed params not sending
 - Working test suite
+
+## 0.0.1-dev.5
+
+- Added example app

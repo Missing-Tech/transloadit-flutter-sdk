@@ -24,7 +24,7 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Run templates
 - [ ] Error handling
 - [x] Better tests
-- [ ] Add an example file
+- [x] Add an example file
 
 ## Basic Examples
 
