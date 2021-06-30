@@ -33,3 +33,10 @@
 ## 0.0.1-dev.5
 
 - Added example app
+
+## 0.1.0
+
+- Updated example app
+- More documentation
+- Exposed upload progress value for progress bar
+- Some error handling

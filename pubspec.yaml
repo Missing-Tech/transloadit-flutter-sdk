@@ -1,6 +1,6 @@
 name: transloadit
 description: A Flutter library that provides tooling to interact with the Transloadit API. 
-version: 0.0.1-dev.5
+version: 0.1.0
 homepage: https://github.com/Missing-Tech/transloadit-flutter-sdk
 
 environment:

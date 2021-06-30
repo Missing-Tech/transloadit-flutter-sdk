@@ -33,6 +33,8 @@ class _MyHomePageState extends State<MyHomePage> {
   String? imageURL;
   double imageRotation = 0;
   bool isProcessing = false;
+  bool uploadComplete = false;
+  double progress = 0;
 
   // Opens a file picker to select an on device file
   Future<void> _pickFile() async {
@@ -59,14 +61,22 @@ class _MyHomePageState extends State<MyHomePage> {
       });
 
       TransloaditClient client =
-          TransloaditClient(authKey: '[AUTH_KEY]', authSecret: '[AUTH_SECRET]');
+          TransloaditClient(authKey: 'AUTH_KEY', authSecret: 'AUTH_SECRET');
 
       TransloaditAssembly assembly = client.newAssembly();
 
       assembly.addFile(file: image!);
       assembly.addStep("resize", "/image/resize", {"rotation": imageRotation});
 
-      TransloaditResponse response = await assembly.createAssembly();
+      TransloaditResponse response = await assembly.createAssembly(
+        onProgress: (progressValue) {
+          print(progressValue);
+          setState(() {
+            progress = progressValue;
+          });
+        },
+        onComplete: () => setState(() => uploadComplete = true),
+      );
 
       setState(() {
         imageURL = response.data['results']['resize'][0]['ssl_url'];
@@ -85,7 +95,11 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           isProcessing
-              ? CircularProgressIndicator()
+              ? uploadComplete
+                  ? CircularProgressIndicator()
+                  : LinearProgressIndicator(
+                      value: progress / 100,
+                    )
               : Padding(
                   padding: EdgeInsets.all(10),
                   child: imageURL != null
@@ -120,10 +134,12 @@ class _MyHomePageState extends State<MyHomePage> {
             style: ButtonStyle(
                 foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.blue)),
-            child: Text('Resize Image'),
+            child: Text('Rotate Image'),
             onPressed: () {
               setState(() {
                 _rotateImage();
+                progress = 0;
+                uploadComplete = false;
               });
             },
           ),

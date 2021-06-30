@@ -22,7 +22,7 @@ Flutter integration with [Transloadit](https://transloadit.com/)
 - [x] Edit templates
 - [x] Delete templates
 - [x] Run templates
-- [ ] Error handling
+- [x] Error handling
 - [x] Better tests
 - [x] Add an example file
 
@@ -93,4 +93,26 @@ TransloaditAssembly assembly = client.runTemplate(
 TransloaditResponse response = await assembly.createAssembly();
 
 print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
+```
+
+### Running template with fields
+```dart
+TransloaditAssembly assembly = client.runTemplate(
+        templateID: 'TEMPLATE_ID', 
+        params: {'fields': {'input': 'items.jpg'}});
+TransloaditResponse response = await assembly.createAssembly();
+
+print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
+```
+
+### Tracking upload progress
+```dart
+TransloaditResponse response = await assembly.createAssembly(
+        onProgress: (progressValue) {
+          print(progressValue); // Value from 0-100
+        },
+        onComplete: () {
+          // Do stuff
+        }),
+      );
 ```

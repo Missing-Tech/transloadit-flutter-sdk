@@ -51,7 +51,8 @@ class TransloaditAssembly extends TransloaditOptions {
   }
 
   /// Uploads files to the Assembly via the Tus protocol.
-  Future<void> tusUpload(String assemblyURL, String tusURL) async {
+  Future<void> tusUpload(String assemblyURL, String tusURL,
+      {Function(double)? onProgress, Function()? onComplete}) async {
     Map<String, String> metadata = {"assembly_url": assemblyURL};
     if (files.isNotEmpty) {
       for (var key in files.keys) {
@@ -61,15 +62,27 @@ class TransloaditAssembly extends TransloaditOptions {
         TusClient client = TusClient(Uri.parse(tusURL), files[key]!,
             metadata: metadata, maxChunkSize: 10 * 1024 * 1024);
 
-        client.upload(onProgress: (progress) {
-          //TODO: Expose progress to be used in widgets
-        });
+        client.upload(
+          onProgress: (progress) {
+            if (onProgress != null) {
+              onProgress(progress);
+            }
+          },
+          onComplete: () {
+            if (onComplete != null) {
+              onComplete();
+            }
+          },
+        );
       }
     }
   }
 
   /// Creates the Assembly using the options specified.
-  Future<TransloaditResponse> createAssembly() async {
+  /// [onProgress] returns the progress of the file upload
+  /// [onComplete] will call when the file is uploaded and the assembly is processing
+  Future<TransloaditResponse> createAssembly(
+      {Function(double)? onProgress, Function()? onComplete}) async {
     final data = super.options;
     final extraData = {
       "tus_num_expected_upload_files": files.length.toString()
@@ -82,7 +95,19 @@ class TransloaditAssembly extends TransloaditOptions {
 
     if (response.data.containsKey("assembly_ssl_url")) {
       await tusUpload(
-          response.data["assembly_ssl_url"], response.data["tus_url"]);
+        response.data["assembly_ssl_url"],
+        response.data["tus_url"],
+        onProgress: (progress) {
+          if (onProgress != null) {
+            onProgress(progress);
+          }
+        },
+        onComplete: () {
+          if (onComplete != null) {
+            onComplete();
+          }
+        },
+      );
     }
 
     while (!isAssemblyFinished(response)) {
@@ -99,7 +124,12 @@ class TransloaditAssembly extends TransloaditOptions {
     bool isAborted = status == "REQUEST_ABORTED";
     bool isCancelled = status == "ASSEMBLY_CANCELED";
     bool isCompleted = status == "ASSEMBLY_COMPLETED";
-    bool isFailed = response.data["error"] ?? false;
+    bool isFailed = response.data["error"] != null;
+
+    if (isFailed) {
+      throw Exception(response.data["error"]);
+    }
+
     return isAborted || isCancelled || isCompleted || isFailed;
   }
 }
