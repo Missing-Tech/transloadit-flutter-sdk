@@ -45,7 +45,6 @@ print(response.statusCode) // 200
 ### Creating an assembly
 ```dart
 TransloaditAssembly assembly = client.newAssembly();
-final imagePath = 'assets/cat.jpg';
 
 assembly.addStep("import", "/http/import",
         {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
@@ -83,16 +82,6 @@ TransloaditResponse response = await client.updateTemplate(
       );
 
 print(response['ok']) // "TEMPLATE_UPDATED"
-```
-
-### Running template with fields
-```dart
-TransloaditAssembly assembly = client.runTemplate(
-        templateID: 'TEMPLATE_ID', 
-        params: {'fields': {'input': 'items.jpg'}});
-TransloaditResponse response = await assembly.createAssembly();
-
-print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
 ```
 
 ### Running template with fields
