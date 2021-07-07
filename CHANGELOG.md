@@ -1,18 +1,22 @@
-## 0.0.1-dev.1
+## 0.1.1
 
-- Getting assemblies
-- Creating assemblies
-- Uploading files
-- Running templates
-- Cancelling assemblies
+- Added web support
 
-## 0.0.1-dev.2
+## 0.1.0
 
-- Getting templates
-- Creating templates
-- Updating templates
-- Deleting templates
-- Better documentation
+- Updated example app
+- More documentation
+- Exposed upload progress value for progress bar
+- Some error handling
+
+## 0.0.1-dev.5
+
+- Added example app
+
+## 0.0.1-dev.4
+
+- Fixed params not sending
+- Working test suite
 
 ## 0.0.1-dev.3
 
@@ -25,18 +29,19 @@
 - Get priority job slots
 - Better tests
 
-## 0.0.1-dev.4
+## 0.0.1-dev.2
 
-- Fixed params not sending
-- Working test suite
+- Getting templates
+- Creating templates
+- Updating templates
+- Deleting templates
+- Better documentation
 
-## 0.0.1-dev.5
 
-- Added example app
+## 0.0.1-dev.1
 
-## 0.1.0
-
-- Updated example app
-- More documentation
-- Exposed upload progress value for progress bar
-- Some error handling
+- Getting assemblies
+- Creating assemblies
+- Uploading files
+- Running templates
+- Cancelling assemblies
