@@ -4,27 +4,9 @@
 
 Flutter integration with [Transloadit](https://transloadit.com/)
 
-# WIP - 1.0 Release
+## Demo App
+![image](https://user-images.githubusercontent.com/36996165/125303987-1e810880-e325-11eb-811a-4922e1f0b5d7.png)
 
-- [x] Create assemblies
-- [x] Get assemblies
-- [x] Delete assemblies
-- [x] Add files
-- [x] Remove files
-- [x] Replay assemblies
-- [x] Retrieve list of assemblies
-- [x] Replay assembly notification
-- [x] Retrieve list of assembly notifications
-- [x] Retrieve month's bill
-- [x] Get priority job slots
-- [x] Create templates
-- [x] Get templates
-- [x] Edit templates
-- [x] Delete templates
-- [x] Run templates
-- [x] Error handling
-- [x] Better tests
-- [x] Add an example file
 
 ## Basic Examples
 
