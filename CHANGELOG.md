@@ -1,3 +1,7 @@
+## 0.1.2
+
+- Pretty example app ✨
+
 ## 0.1.1
 
 - Added web support
