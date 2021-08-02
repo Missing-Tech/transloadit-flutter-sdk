@@ -37,6 +37,21 @@ Map<int, Color> light = {
 MaterialColor transloaditDark = MaterialColor(0xFF111E32, dark);
 MaterialColor transloaditLight = MaterialColor(0xFF0078D1, light);
 
+ColorScheme colorScheme = ColorScheme(
+    primary: transloaditDark,
+    primaryVariant: dark[500]!,
+    secondary: transloaditLight,
+    secondaryVariant: light[200]!,
+    surface: Colors.white,
+    background: Colors.white,
+    error: Colors.redAccent,
+    onPrimary: Colors.white,
+    onSecondary: Colors.white,
+    onSurface: transloaditDark,
+    onBackground: transloaditDark,
+    onError: Colors.white,
+    brightness: Brightness.light);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -45,14 +60,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           // Define the default brightness and colors.
           brightness: Brightness.light,
-          primaryColor: transloaditDark,
-          accentColor: transloaditLight,
+          colorScheme: colorScheme,
           sliderTheme: SliderThemeData(
-            valueIndicatorColor: transloaditDark,
-            activeTrackColor: transloaditDark,
-            activeTickMarkColor: transloaditDark,
-            thumbColor: transloaditDark,
-            inactiveTrackColor: transloaditLight[200],
+            valueIndicatorColor: colorScheme.primary,
+            activeTrackColor: colorScheme.primary,
+            activeTickMarkColor: colorScheme.primary,
+            thumbColor: colorScheme.primary,
+            inactiveTrackColor: colorScheme.secondaryVariant,
             inactiveTickMarkColor: Colors.transparent,
             valueIndicatorShape: PaddleSliderValueIndicatorShape(),
           )),
