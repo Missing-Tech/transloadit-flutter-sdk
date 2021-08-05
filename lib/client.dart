@@ -17,7 +17,6 @@ class TransloaditClient {
   /// An instance of the Transloadit HTTP Request object.
   late TransloaditRequest request;
 
-  /// Client constructor
   TransloaditClient(
       {String service = "api2.transloadit.com",
       required String authKey,
@@ -174,7 +173,7 @@ class TransloaditClient {
     return response;
   }
 
-  /// Gets the current instructions of a template
+  // Gets the current instructions of a template
   // Future<Map<String, dynamic>> _getCurrentInstructions(
   //     String templateID) async {
   //   TransloaditResponse response = await getTemplate(templateID: templateID);

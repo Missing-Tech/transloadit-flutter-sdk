@@ -118,7 +118,7 @@ class TransloaditAssembly extends TransloaditOptions {
     return response;
   }
 
-  /// Not sure what this one does..
+  /// Returns whether the assembly has finished, whether successful or not
   bool isAssemblyFinished(TransloaditResponse response) {
     final status = response.data["ok"];
     bool isAborted = status == "REQUEST_ABORTED";
