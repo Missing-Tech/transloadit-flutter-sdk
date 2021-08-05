@@ -1,3 +1,7 @@
+## 0.1.3
+
+- Clean docs
+
 ## 0.1.2
 
 - Pretty example app ✨

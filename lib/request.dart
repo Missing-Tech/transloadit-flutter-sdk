@@ -3,7 +3,7 @@ part of transloadit;
 /// Transloadit tailored HTTP Request object.
 class TransloaditRequest {
   /// Request headers to be used globally.
-  final headers = {"Transloadit-Client": "flutter-sdk:" + "0.1.2"};
+  final headers = {"Transloadit-Client": "flutter-sdk:" + "0.1.3"};
 
   /// An instance of the Transloadit class.
   late TransloaditClient transloadit;
