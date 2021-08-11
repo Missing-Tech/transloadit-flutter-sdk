@@ -1,3 +1,7 @@
+## 0.2.0
+
+- Updated README to reflect other Transloadit SDKs
+
 ## 0.1.3
 
 - Clean docs
