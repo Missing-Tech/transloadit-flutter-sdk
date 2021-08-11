@@ -1,89 +1,107 @@
 [![Dart](https://github.com/Missing-Tech/transloadit-flutter-sdk/actions/workflows/dart.yml/badge.svg?branch=main)](https://github.com/Missing-Tech/transloadit-flutter-sdk/actions/workflows/dart.yml)
 
-# Transloadit Flutter SDK
+# flutter-sdk
 
-Flutter integration with [Transloadit](https://transloadit.com/)
+A **Flutter** integration for [Transloadit](https://transloadit.com/)'s file uploading and encoding service.
 
-## Demo App
-![image](https://user-images.githubusercontent.com/36996165/125303987-1e810880-e325-11eb-811a-4922e1f0b5d7.png)
+## Intro
+
+[Transloadit](https://transloadit.com) is a service that helps you handle file uploads, resize, crop and watermark your images, make GIFs, transcode your videos, extract thumbnails, generate audio waveforms, and so much more. In short, [Transloadit](https://transloadit.com) is the Swiss Army Knife for your files.
+
+This is a **Flutter** SDK to make it easy to talk to the [Transloadit](https://transloadit.com) REST API.
 
 
-## Basic Examples
+## Install
 
-### Creating client
+```
+flutter pub add transloadit
+```
+
+## Usage
+
+Firstly you need to create a Transloadit client, using your [authentication credentials](https://transloadit.com/accounts/credentials). This will allow us to make requests to the [Transloadit API](https://transloadit.com/docs/api/).
 ```dart
 TransloaditClient client = TransloaditClient(
         authKey: 'KEY',
         authSecret: 'SECRET');
 ```
 
-### Getting an assembly
-```dart
-TransloaditResponse response = await client.getAssembly(
-        assemblyID: 'ASSEMBLY_ID');
-print(response.statusCode) // 200
-```
+### 1. Resize an Image
+This example shows how to resize an image using the Transloadit API.
 
-### Creating an assembly
 ```dart
+TransloaditClient client = TransloaditClient(
+        authKey: 'KEY',
+        authSecret: 'SECRET');
+
+// First we create our assembly
 TransloaditAssembly assembly = client.newAssembly();
 
+// Next we add two steps, one to import a file, and another to resize it to 400px tall
 assembly.addStep("import", "/http/import",
         {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
 assembly.addStep("resize", "/image/resize", {"height": 400});
 
+// We then send this assembly to Transloadit to be processed
 TransloaditResponse response = await assembly.createAssembly();
 
 print(response['ok']) // "ASSEMBLY_COMPLETED"
 ```
 
-### Creating a template
+### 2. Uploading files with an Assembly
+
+A file from a user's device can be included with an Assembly using the `addFile` method.
+
 ```dart
-TransloaditTemplate template = client.newTemplate(name: "template");
+TransloaditClient client = TransloaditClient(
+        authKey: 'KEY',
+        authSecret: 'SECRET');
 
-template.addStep("import", "/http/import",
-          {"url": "https://demos.transloadit.com/inputs/chameleon.jpg"});
-template.addStep("resize", "/image/resize", {"use": "import", "height": 400});
+// First we create our assembly
+TransloaditAssembly assembly = client.newAssembly();
 
-TransloaditResponse response = await template.createTemplate();
+// Add a local file to be sent along with the assembly via the Tus protocol
+assembly.addFile(file: file!);
+assembly.addStep("resize", "/image/resize", {"height": 400});
 
-print(response['ok']) // "TEMPLATE_CREATED"
+// We then send this assembly to Transloadit to be processed
+TransloaditResponse response = await assembly.createAssembly();
+
+print(response['ok']) // "ASSEMBLY_COMPLETED"
 ```
 
-### Updating a template
+### 3. Using a template with fields
 ```dart
-TransloaditResponse response = await client.updateTemplate(
-        templateID: 'TEMPLATE_ID',
-        template: {
-          "import": {
-            "robot": "/http/import",
-            "url": "https://demos.transloadit.com/inputs/chameleon.jpg"
-          },
-          "resize": {"use": "import", "robot": "/image/resize", "height": 200}
-        },
-      );
+TransloaditClient client = TransloaditClient(
+        authKey: 'KEY',
+        authSecret: 'SECRET');
 
-print(response['ok']) // "TEMPLATE_UPDATED"
-```
-
-### Running template with fields
-```dart
+// Create an assembly from a template ID
 TransloaditAssembly assembly = client.runTemplate(
         templateID: 'TEMPLATE_ID', 
         params: {'fields': {'input': 'items.jpg'}});
+
+// We then send this assembly to Transloadit to be processed
 TransloaditResponse response = await assembly.createAssembly();
 
 print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
 ```
 
-### Tracking upload progress
+### 4. Tracking Upload Progress
+These two callback methods track the progress of the Tus upload, not the Transloadit Assembly.
 ```dart
 TransloaditResponse response = await assembly.createAssembly(
         onProgress: (progressValue) {
-          print(progressValue); // Value from 0-100
+          print(progressValue); // Float from 0-100
         },
         onComplete: () {
-          // Do stuff
+          // Run on completion
         }),
       );
 ```
+
+## Example
+For a fully working example app, check out [examples/](https://github.com/Missing-Tech/transloadit-flutter-sdk/tree/main/example).
+
+## Documentation
+Full documentation for all classes and methods can be found on [pub.dev](https://pub.dev/documentation/transloadit/latest/)
