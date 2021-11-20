@@ -87,6 +87,7 @@ class TransloaditAssembly extends TransloaditOptions {
     final extraData = {
       "tus_num_expected_upload_files": files.length.toString()
     };
+
     TransloaditResponse response = await client.request.httpPost(
         service: client.service,
         assemblyPath: "/assemblies",

@@ -38,15 +38,7 @@ class TransloaditClient {
     String assemblyID = '',
     String assemblyURL = '',
   }) async {
-    String _assemblyID = assemblyID;
-
-    if (assemblyID.isEmpty && assemblyURL.isEmpty) {
-      throw Exception('Either assemblyID or assemblyURL cannot be empty.');
-    }
-
-    if (assemblyURL.isNotEmpty) {
-      _assemblyID = assemblyURL.substring(assemblyURL.lastIndexOf('/') + 1);
-    }
+    String _assemblyID = getAssemblyID(assemblyID, assemblyURL);
 
     final response = await request.httpGet(
         service: service, assemblyPath: "/assemblies/$_assemblyID");
@@ -73,15 +65,7 @@ class TransloaditClient {
     String assemblyID = '',
     String assemblyURL = '',
   }) async {
-    String _assemblyID = assemblyID;
-
-    if (assemblyID.isEmpty && assemblyURL.isEmpty) {
-      throw Exception('Either assemblyID or assemblyURL cannot be empty.');
-    }
-
-    if (assemblyURL.isNotEmpty) {
-      _assemblyID = assemblyURL.substring(assemblyURL.lastIndexOf('/') + 1);
-    }
+    String _assemblyID = getAssemblyID(assemblyID, assemblyURL);
 
     String url = 'assemblies/$_assemblyID';
     return request.httpDelete(service: service, assemblyPath: url);
@@ -97,6 +81,22 @@ class TransloaditClient {
     String url = '/assemblies/$assemblyID/replay';
     return request.httpPost(
         service: service, assemblyPath: url, params: params);
+  }
+
+  /// Utility function to get the assembly ID either from the one supplied or from a URL
+  String getAssemblyID(String assemblyID, String assemblyURL) {
+    String _assemblyID = assemblyID;
+
+    if (assemblyID.isEmpty && assemblyURL.isEmpty) {
+      throw Exception('Either assemblyID or assemblyURL cannot be empty.');
+    }
+
+    if (assemblyURL.isNotEmpty) {
+      // Retrieves the Assembly ID from
+      _assemblyID = assemblyURL.substring(assemblyURL.lastIndexOf('/') + 1);
+    }
+
+    return _assemblyID;
   }
 
   /// Replays an Assembly Notification of a given [assemblyID]
@@ -149,36 +149,20 @@ class TransloaditClient {
   Future<TransloaditResponse> updateTemplate(
       {required String templateID,
       required Map<String, dynamic> template,
-      Map<String, dynamic>? params,
-      bool merge = false}) async {
+      Map<String, dynamic>? params}) async {
     params = params ?? {};
 
     Map<String, dynamic> templateCopy = {};
     templateCopy["steps"] = template;
     params["template"] = templateCopy;
 
-    // TODO: Implement instruction merging
-    // if (merge) {
-    //   Map<String, dynamic> currentInstructions = {};
-    //   _getCurrentInstructions(templateID)
-    //       .then((value) => currentInstructions = value);
-    //   for (var key in template.keys) {}
-    //   print(currentInstructions);
-    // }
-
     final response = await request.httpPut(
         service: service,
         assemblyPath: "/templates/$templateID",
         params: params);
+
     return response;
   }
-
-  // Gets the current instructions of a template
-  // Future<Map<String, dynamic>> _getCurrentInstructions(
-  //     String templateID) async {
-  //   TransloaditResponse response = await getTemplate(templateID: templateID);
-  //   return response.data["content"];
-  // }
 
   /// Deletes a Template of a given [templateID].
   Future<TransloaditResponse> deleteTemplate({
