@@ -11,16 +11,15 @@ dependencies:
   crypto: ^3.0.1
   flutter:
     sdk: flutter
-
   http: ^0.13.3
-  intl: ^0.17.0
+  intl: ^0.18.0
   tus_client: ^1.0.0
   cross_file: ^0.3.1
   path: ^1.8.0
-  nock: ^1.2.0
   universal_io: ^2.0.4
 
 dev_dependencies:
+  nock: ^1.1.2
   flutter_test:
     sdk: flutter
 
