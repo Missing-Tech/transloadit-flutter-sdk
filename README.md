@@ -1,5 +1,3 @@
-[![Dart](https://github.com/Missing-Tech/transloadit-flutter-sdk/actions/workflows/dart.yml/badge.svg?branch=main)](https://github.com/Missing-Tech/transloadit-flutter-sdk/actions/workflows/dart.yml)
-
 # flutter-sdk
 
 A **Flutter** integration for [Transloadit](https://transloadit.com/)'s file uploading and encoding service.
@@ -10,7 +8,6 @@ A **Flutter** integration for [Transloadit](https://transloadit.com/)'s file upl
 
 This is a **Flutter** SDK to make it easy to talk to the [Transloadit](https://transloadit.com) REST API.
 
-
 ## Install
 
 ```
@@ -20,6 +17,7 @@ flutter pub add transloadit
 ## Usage
 
 Firstly you need to create a Transloadit client, using your [authentication credentials](https://transloadit.com/accounts/credentials). This will allow us to make requests to the [Transloadit API](https://transloadit.com/docs/api/).
+
 ```dart
 TransloaditClient client = TransloaditClient(
         authKey: 'KEY',
@@ -27,6 +25,7 @@ TransloaditClient client = TransloaditClient(
 ```
 
 ### 1. Resize an Image
+
 This example shows how to resize an image using the Transloadit API.
 
 ```dart
@@ -71,6 +70,7 @@ print(response['ok']) // "ASSEMBLY_COMPLETED"
 ```
 
 ### 3. Using a template with fields
+
 ```dart
 TransloaditClient client = TransloaditClient(
         authKey: 'KEY',
@@ -78,7 +78,7 @@ TransloaditClient client = TransloaditClient(
 
 // Create an assembly from a template ID
 TransloaditAssembly assembly = client.runTemplate(
-        templateID: 'TEMPLATE_ID', 
+        templateID: 'TEMPLATE_ID',
         params: {'fields': {'input': 'items.jpg'}});
 
 // We then send this assembly to Transloadit to be processed
@@ -88,7 +88,9 @@ print(response.data["ok"]); // "ASSEMBLY_COMPLETED"
 ```
 
 ### 4. Tracking Upload Progress
+
 These two callback methods track the progress of the Tus upload, not the Transloadit Assembly.
+
 ```dart
 TransloaditResponse response = await assembly.createAssembly(
         onProgress: (progressValue) {
@@ -101,7 +103,9 @@ TransloaditResponse response = await assembly.createAssembly(
 ```
 
 ## Example
+
 For a fully working example app, check out [examples/](https://github.com/Missing-Tech/transloadit-flutter-sdk/tree/main/example).
 
 ## Documentation
+
 Full documentation for all classes and methods can be found on [pub.dev](https://pub.dev/documentation/transloadit/latest/)

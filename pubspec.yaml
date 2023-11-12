@@ -1,6 +1,6 @@
 name: transloadit
-description: A Flutter library that provides tooling to interact with the Transloadit API. 
-version: 0.2.0
+description: A Flutter library that provides tooling to interact with the Transloadit API.
+version: 0.2.1
 homepage: https://github.com/Missing-Tech/transloadit-flutter-sdk
 
 environment:
@@ -28,10 +28,9 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   assets:
     - test/assets/cat.jpg
-    
+
   # To add assets to your package, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

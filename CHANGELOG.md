@@ -1,3 +1,7 @@
+## 0.2.1
+
+- Make POST requests use `en-US` to fix bug when non-latin characters are used
+
 ## 0.2.0
 
 - Updated README to reflect other Transloadit SDKs
@@ -48,7 +52,6 @@
 - Updating templates
 - Deleting templates
 - Better documentation
-
 
 ## 0.0.1-dev.1
 
