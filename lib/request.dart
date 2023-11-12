@@ -90,7 +90,7 @@ class TransloaditRequest {
 
     data["auth"] = {
       "key": transloadit.authKey,
-      "expires": DateFormat('yyyy/MM/dd HH:mm:ss+00:00').format(expiry)
+      "expires": DateFormat('yyyy/MM/dd HH:mm:ss+00:00', 'en_US').format(expiry)
     };
     String jsonData = json.encode(data);
     return {"params": jsonData, "signature": signData(jsonData)};
